@@ -5,6 +5,7 @@
   <title>Orçamento Estampas Talentos</title>
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
   <style>
+    /* Reset e estilos gerais */
     * {
       box-sizing: border-box;
     }
@@ -20,7 +21,7 @@
     }
     .container {
       background: #fff;
-      max-width: 500px;
+      max-width: 600px;
       width: 90%;
       padding: 30px;
       border-radius: 10px;
@@ -39,14 +40,14 @@
       margin-bottom: 5px;
       color: #555;
     }
-    select, input[type="button"] {
+    select, input[type="button"], input[type="number"] {
       width: 100%;
       padding: 10px;
       border: 1px solid #ccc;
       border-radius: 5px;
       font-size: 1rem;
     }
-    select:focus, input[type="button"]:focus {
+    select:focus, input[type="button"]:focus, input[type="number"]:focus {
       outline: none;
       border-color: #007BFF;
     }
@@ -67,63 +68,128 @@
       margin-top: 20px;
       color: #007BFF;
     }
+    /* Estilos para abas */
+    .tabs {
+      display: flex;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #ccc;
+    }
+    .tab-button {
+      flex: 1;
+      padding: 10px;
+      background: #f2f2f2;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+    .tab-button.active {
+      background: #fff;
+      border-bottom: 2px solid #fff;
+      font-weight: bold;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Orçamento Estampas Talentos</h1>
-    <form id="priceForm">
-      <div class="form-group">
-        <label for="cores">Quantidade de Cores:</label>
-        <select id="cores" name="cores">
-          <option value="1">1 (40×50)</option>
-          <option value="2">2 (40×50)</option>
-          <option value="3">3 (40×50)</option>
-          <option value="4">4 (40×50)</option>
-        </select>
-      </div>
-      
-      <div class="form-group">
-        <label for="quantidade">Quantidade de Peças:</label>
-        <select id="quantidade" name="quantidade">
-          <option value="10-50">10 a 50</option>
-          <option value="50-100">50 a 100</option>
-          <option value="100-200">100 a 200</option>
-          <option value="200-500">200 a 500</option>
-          <option value="500-1000">500 a 1000</option>
-        </select>
-      </div>
-      
-      <div class="form-group">
-        <label for="material">Material:</label>
-        <select id="material" name="material">
-          <option value="tintaLeve">Tinta Leve (Tecido Claro)</option>
-          <option value="tintaCobertura">Tinta Cobertura (Tecido Escuro)</option>
-          <option value="tintaRelevo">Tinta Relevo, Gel, Puff Nivelado</option>
-        </select>
-      </div>
-      
-      <div class="form-group">
-        <label for="tamanho">Tamanho da Tela:</label>
-        <select id="tamanho" name="tamanho">
-          <option value="40x50">40×50 (Sem acréscimo)</option>
-          <option value="50x60">50×60 (+10%)</option>
-          <option value="60x70">60×70 (+20%)</option>
-          <option value="80x90">80×90 (+30%)</option>
-          <option value="90x100">90×100 (+40%)</option>
-        </select>
-      </div>
-      
-      <input type="button" value="Calcular Preço" onclick="calcularPreco()">
-    </form>
+    <div class="tabs">
+      <button class="tab-button active" onclick="openTab('estampas')">Orçamento Estampas Talentos</button>
+      <button class="tab-button" onclick="openTab('fotolito')">Orçamento Fotolito</button>
+    </div>
     
-    <div class="result">
-      <h2>Preço Final: <span id="resultado">R$ 0,00</span></h2>
+    <!-- Aba Orçamento Estampas Talentos -->
+    <div id="estampas" class="tab-content active">
+      <h1>Orçamento Estampas Talentos</h1>
+      <form id="priceForm">
+        <div class="form-group">
+          <label for="cores">Quantidade de Cores:</label>
+          <select id="cores" name="cores">
+            <option value="1">1 (40×50)</option>
+            <option value="2">2 (40×50)</option>
+            <option value="3">3 (40×50)</option>
+            <option value="4">4 (40×50)</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="quantidade">Quantidade de Peças:</label>
+          <select id="quantidade" name="quantidade">
+            <option value="10-50">10 a 50</option>
+            <option value="50-100">50 a 100</option>
+            <option value="100-200">100 a 200</option>
+            <option value="200-500">200 a 500</option>
+            <option value="500-1000">500 a 1000</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="material">Material:</label>
+          <select id="material" name="material">
+            <option value="tintaLeve">Tinta Leve (Tecido Claro)</option>
+            <option value="tintaCobertura">Tinta Cobertura (Tecido Escuro)</option>
+            <option value="tintaRelevo">Tinta Relevo, Gel, Puff Nivelado</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="tamanho">Tamanho da Tela:</label>
+          <select id="tamanho" name="tamanho">
+            <option value="40x50">40×50 (Sem acréscimo)</option>
+            <option value="50x60">50×60 (+10%)</option>
+            <option value="60x70">60×70 (+20%)</option>
+            <option value="80x90">80×90 (+30%)</option>
+            <option value="90x100">90×100 (+40%)</option>
+          </select>
+        </div>
+        
+        <input type="button" value="Calcular Preço" onclick="calcularPrecoEstampas()">
+      </form>
+      
+      <div class="result">
+        <h2>Preço Final: <span id="resultadoEstampas">R$ 0,00</span></h2>
+      </div>
+    </div>
+    
+    <!-- Aba Orçamento Fotolito -->
+    <div id="fotolito" class="tab-content">
+      <h1>Orçamento Fotolito</h1>
+      <form id="fotolitoForm">
+        <div class="form-group">
+          <label for="metragem">Metragem (metros lineares):</label>
+          <input type="number" id="metragem" name="metragem" step="0.01" placeholder="Digite a metragem">
+        </div>
+        <input type="button" value="Calcular Preço" onclick="calcularPrecoFotolito()">
+      </form>
+      
+      <div class="result">
+        <h2>Preço Final: <span id="resultadoFotolito">R$ 0,00</span></h2>
+      </div>
     </div>
   </div>
 
   <script>
-    // Tabela de preços baseada na dimensão 40×50
+    // Função para alternar entre abas
+    function openTab(tabName) {
+      var i, tabcontent, tabbuttons;
+      tabcontent = document.getElementsByClassName("tab-content");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].classList.remove("active");
+      }
+      tabbuttons = document.getElementsByClassName("tab-button");
+      for (i = 0; i < tabbuttons.length; i++) {
+        tabbuttons[i].classList.remove("active");
+      }
+      document.getElementById(tabName).classList.add("active");
+      event.currentTarget.classList.add("active");
+    }
+    
+    // Tabela de preços baseada na dimensão 40×50 para Estampas Talentos
     const tableData = {
       "1": {
         "10-50": { "tintaLeve": 7.50, "tintaCobertura": 9.00, "tintaRelevo": 12.00 },
@@ -155,7 +221,7 @@
       }
     };
 
-    // Percentuais de acréscimo conforme o tamanho selecionado
+    // Percentuais de acréscimo conforme o tamanho selecionado para Estampas
     const sizePercentage = {
       "40x50": 0,
       "50x60": 10,
@@ -164,25 +230,29 @@
       "90x100": 40
     };
 
-    function calcularPreco() {
-      // Obtém os valores selecionados
+    // Função para calcular o preço de Estampas Talentos
+    function calcularPrecoEstampas() {
       const cores = document.getElementById("cores").value;
       const quantidade = document.getElementById("quantidade").value;
       const material = document.getElementById("material").value;
       const tamanho = document.getElementById("tamanho").value;
       
-      // Busca o preço base na tabela para os parâmetros escolhidos
       let basePrice = tableData[cores][quantidade][material];
-      
-      // Aplica o acréscimo conforme o tamanho da tela
       const percent = sizePercentage[tamanho];
       let finalPrice = basePrice * (1 + percent / 100);
-      
-      // Formata para duas casas decimais
       finalPrice = finalPrice.toFixed(2);
-      
-      // Exibe o resultado
-      document.getElementById("resultado").textContent = "R$ " + finalPrice;
+      document.getElementById("resultadoEstampas").textContent = "R$ " + finalPrice;
+    }
+    
+    // Função para calcular o preço do Fotolito (R$60/m)
+    function calcularPrecoFotolito() {
+      const metragem = parseFloat(document.getElementById("metragem").value);
+      if (isNaN(metragem) || metragem <= 0) {
+        alert("Por favor, insira um valor válido para a metragem.");
+        return;
+      }
+      let finalPrice = (metragem * 60.00).toFixed(2);
+      document.getElementById("resultadoFotolito").textContent = "R$ " + finalPrice;
     }
   </script>
 </body>
