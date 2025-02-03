@@ -109,6 +109,7 @@
       <form id="priceForm">
         <div class="form-group">
           <label for="cores">Quantidade de Cores:</label>
+          <!-- As opções de "cores" determinam qual linha da tabela será usada -->
           <select id="cores" name="cores">
             <option value="1">1 (40×50)</option>
             <option value="2">2 (40×50)</option>
@@ -119,26 +120,29 @@
         
         <div class="form-group">
           <label for="quantidade">Quantidade de Peças:</label>
+          <!-- As opções de quantidade correspondem aos grupos da tabela -->
           <select id="quantidade" name="quantidade">
-            <option value="10-50">10 a 50</option>
-            <option value="50-100">50 a 100</option>
-            <option value="100-200">100 a 200</option>
-            <option value="200-500">200 a 500</option>
-            <option value="500-1000">500 a 1000</option>
+            <option value="10-50">10 a 50 peças</option>
+            <option value="50-100">50 a 100 peças</option>
+            <option value="100-200">100 a 200 peças</option>
+            <option value="200-500">200 a 500 peças</option>
+            <option value="500-1000">500 a 1000 peças</option>
           </select>
         </div>
         
         <div class="form-group">
           <label for="material">Material:</label>
+          <!-- Escolha do tipo de tinta -->
           <select id="material" name="material">
-            <option value="tintaLeve">Tinta Leve (Tecido Claro)</option>
-            <option value="tintaCobertura">Tinta Cobertura (Tecido Escuro)</option>
-            <option value="tintaRelevo">Tinta Relevo, Gel, Puff Nivelado</option>
+            <option value="tintaLeve">Tinta leve, tecidos claros</option>
+            <option value="tintaCobertura">Tinta cobertura, tecidos escuros</option>
+            <option value="tintaRelevo">Tinta relevo, gel, puff, metalizado</option>
           </select>
         </div>
         
         <div class="form-group">
           <label for="tamanho">Tamanho da Tela:</label>
+          <!-- 40x50 não tem acréscimo; os demais têm acréscimos conforme informado -->
           <select id="tamanho" name="tamanho">
             <option value="40x50">40×50 (Sem acréscimo)</option>
             <option value="50x60">50×60 (+10%)</option>
@@ -189,35 +193,43 @@
       event.currentTarget.classList.add("active");
     }
     
-    // Tabela de preços baseada na dimensão 40×50 para Estampas Talentos
+    /* Tabela de preços para Orçamento Estampas Talentos
+       A estrutura é:
+       tableData[quantidade][cor] onde:
+         - quantidade: "10-50", "50-100", "100-200", "200-500", "500-1000"
+         - cor: "1", "2", "3" ou "4" (definida pelo número de cores selecionadas)
+         - Em cada, as chaves são "tintaLeve", "tintaCobertura" e "tintaRelevo"
+    */
     const tableData = {
-      "1": {
-        "10-50": { "tintaLeve": 7.50, "tintaCobertura": 9.00, "tintaRelevo": 12.00 },
-        "50-100": { "tintaLeve": 3.10, "tintaCobertura": 3.60, "tintaRelevo": 4.00 },
-        "100-200": { "tintaLeve": 2.90, "tintaCobertura": 3.50, "tintaRelevo": 4.00 },
-        "200-500": { "tintaLeve": 2.40, "tintaCobertura": 3.00, "tintaRelevo": 3.80 },
-        "500-1000": { "tintaLeve": 1.60, "tintaCobertura": 1.90, "tintaRelevo": 2.20 }
+      "10-50": {
+        "1": { "tintaLeve": 7.50, "tintaCobertura": 9.00, "tintaRelevo": 12.00 },
+        "2": { "tintaLeve": 14.00, "tintaCobertura": 17.00, "tintaRelevo": 22.00 },
+        "3": { "tintaLeve": 20.00, "tintaCobertura": 25.00, "tintaRelevo": 33.00 },
+        "4": { "tintaLeve": 25.00, "tintaCobertura": 32.00, "tintaRelevo": 44.00 }
       },
-      "2": {
-        "10-50": { "tintaLeve": 14.00, "tintaCobertura": 17.00, "tintaRelevo": 22.00 },
-        "50-100": { "tintaLeve": 6.00, "tintaCobertura": 7.00, "tintaRelevo": 9.00 },
-        "100-200": { "tintaLeve": 4.80, "tintaCobertura": 5.60, "tintaRelevo": 7.00 },
-        "200-500": { "tintaLeve": 3.80, "tintaCobertura": 4.80, "tintaRelevo": 6.00 },
-        "500-1000": { "tintaLeve": 2.20, "tintaCobertura": 2.80, "tintaRelevo": 3.40 }
+      "50-100": {
+        "1": { "tintaLeve": 3.50, "tintaCobertura": 4.00, "tintaRelevo": 5.00 },
+        "2": { "tintaLeve": 6.00, "tintaCobertura": 7.00, "tintaRelevo": 9.00 },
+        "3": { "tintaLeve": 9.00, "tintaCobertura": 10.00, "tintaRelevo": 13.00 },
+        "4": { "tintaLeve": 12.00, "tintaCobertura": 13.00, "tintaRelevo": 17.00 }
       },
-      "3": {
-        "10-50": { "tintaLeve": 20.00, "tintaCobertura": 25.00, "tintaRelevo": 33.00 },
-        "50-100": { "tintaLeve": 9.00, "tintaCobertura": 10.00, "tintaRelevo": 13.00 },
-        "100-200": { "tintaLeve": 7.00, "tintaCobertura": 8.00, "tintaRelevo": 9.00 },
-        "200-500": { "tintaLeve": 5.70, "tintaCobertura": 6.50, "tintaRelevo": 7.50 },
-        "500-1000": { "tintaLeve": 2.80, "tintaCobertura": 3.30, "tintaRelevo": 4.00 }
+      "100-200": {
+        "1": { "tintaLeve": 2.90, "tintaCobertura": 3.10, "tintaRelevo": 3.60 },
+        "2": { "tintaLeve": 4.80, "tintaCobertura": 5.20, "tintaRelevo": 6.20 },
+        "3": { "tintaLeve": 7.00, "tintaCobertura": 7.80, "tintaRelevo": 9.30 },
+        "4": { "tintaLeve": 9.00, "tintaCobertura": 10.40, "tintaRelevo": 12.40 }
       },
-      "4": {
-        "10-50": { "tintaLeve": 25.00, "tintaCobertura": 32.00, "tintaRelevo": 44.00 },
-        "50-100": { "tintaLeve": 12.00, "tintaCobertura": 13.00, "tintaRelevo": 17.00 },
-        "100-200": { "tintaLeve": 9.00, "tintaCobertura": 10.00, "tintaRelevo": 12.00 },
-        "200-500": { "tintaLeve": 7.50, "tintaCobertura": 9.00, "tintaRelevo": 10.50 },
-        "500-1000": { "tintaLeve": 4.40, "tintaCobertura": 5.20, "tintaRelevo": 6.80 }
+      "200-500": {
+        "1": { "tintaLeve": 2.40, "tintaCobertura": 2.60, "tintaRelevo": 3.00 },
+        "2": { "tintaLeve": 3.80, "tintaCobertura": 4.10, "tintaRelevo": 5.00 },
+        "3": { "tintaLeve": 5.70, "tintaCobertura": 6.15, "tintaRelevo": 7.50 },
+        "4": { "tintaLeve": 7.60, "tintaCobertura": 8.20, "tintaRelevo": 10.00 }
+      },
+      "500-1000": {
+        "1": { "tintaLeve": 1.60, "tintaCobertura": 1.90, "tintaRelevo": 2.20 },
+        "2": { "tintaLeve": 2.20, "tintaCobertura": 2.80, "tintaRelevo": 3.40 },
+        "3": { "tintaLeve": 3.30, "tintaCobertura": 3.20, "tintaRelevo": 5.10 },
+        "4": { "tintaLeve": 4.40, "tintaCobertura": 5.10, "tintaRelevo": 6.80 }
       }
     };
 
@@ -232,12 +244,14 @@
 
     // Função para calcular o preço de Estampas Talentos
     function calcularPrecoEstampas() {
-      const cores = document.getElementById("cores").value;
-      const quantidade = document.getElementById("quantidade").value;
-      const material = document.getElementById("material").value;
-      const tamanho = document.getElementById("tamanho").value;
-      
-      let basePrice = tableData[cores][quantidade][material];
+      const cores = document.getElementById("cores").value; // valor: "1", "2", "3" ou "4"
+      const quantidade = document.getElementById("quantidade").value; // ex: "10-50"
+      const material = document.getElementById("material").value; // ex: "tintaLeve"
+      const tamanho = document.getElementById("tamanho").value; // ex: "40x50"
+
+      // Obtém o preço base da tabela conforme os parâmetros escolhidos
+      let basePrice = tableData[quantidade][cores][material];
+      // Aplica o acréscimo conforme o tamanho da tela
       const percent = sizePercentage[tamanho];
       let finalPrice = basePrice * (1 + percent / 100);
       finalPrice = finalPrice.toFixed(2);
